@@ -2,7 +2,7 @@
 
 AstrBot 插件：遮挡干员立绘猜名字，支持单局游戏、排行榜、用户名片和群比赛模式。
 
-当前版本：`2.0.0`
+当前版本：`2.0.1`
 
 ## 功能概览
 
@@ -182,7 +182,32 @@ dist/astrbot_plugin_mrfzccl-<version>.zip
 当前版本打包产物示例：
 
 ```text
-dist/astrbot_plugin_mrfzccl-v2.0.0.zip
+dist/astrbot_plugin_mrfzccl-v2.0.1.zip
+```
+
+## 更新题库数据
+
+在 AstrBot 仓库根目录使用项目的 uv 环境执行：
+
+```bash
+uv run python data/plugins/astrbot_plugin_mrfzccl/scripts/update_data.py
+```
+
+脚本会抓取 bilibili 明日方舟 Wiki 的游戏立绘页和干员数据表，合并后原子替换插件自带的 `arknights_skins_dict.json`。更新前可只校验、不写入：
+
+```bash
+uv run python data/plugins/astrbot_plugin_mrfzccl/scripts/update_data.py --dry-run
+```
+
+更新器不会逐张请求图片。它直接根据 Wiki 页面已经给出的缩略图地址生成原图地址，只统计新增角色和新增皮肤 URL，从而避免图片服务器的 `HEAD` 检测受到限流、403 或临时网络错误影响。已有图片 URL 会保留，新 URL 只做去重追加；即使 Wiki 页面临时缺少旧条目，也不会从题库删除旧皮肤。抓取到的角色或干员数量低于安全阈值时，脚本会拒绝覆盖现有题库。
+
+排查网页结构变化时，也可传入本地保存的页面：
+
+```bash
+uv run python data/plugins/astrbot_plugin_mrfzccl/scripts/update_data.py \
+  --skin-html path/to/skins.html \
+  --operator-html path/to/operators.html \
+  --dry-run
 ```
 
 ## 数据来源

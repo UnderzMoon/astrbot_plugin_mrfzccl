@@ -5,7 +5,6 @@ import subprocess
 import zipfile
 from pathlib import Path
 
-
 PLUGIN_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_OUTPUT_DIR = PLUGIN_ROOT / "dist"
 EXTRA_PACKAGE_PATHS = (
@@ -13,6 +12,7 @@ EXTRA_PACKAGE_PATHS = (
     Path("assets/constructivist_people"),
     Path("src/rendering/snowcap_shop.py"),
     Path("src/rendering/constructivist_people.py"),
+    Path("scripts/update_data.py"),
 )
 
 
