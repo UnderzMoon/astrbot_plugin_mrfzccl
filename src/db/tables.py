@@ -1,8 +1,5 @@
 from datetime import datetime
 from typing import Optional
-
-# from pydantic import NaiveDatetime  # 方案A使用; 改用 sa_type 后不再需要
-
 from sqlalchemy import DateTime
 from sqlmodel import Field, SQLModel
 
@@ -26,8 +23,6 @@ class UserQnAStats(SQLModel, table=True):
     tip_count: int = Field(default=0, description="提示次数")
     # created_at: datetime = Field(default_factory=datetime.now, description="创建时间")
     # updated_at: datetime = Field(default_factory=datetime.now, description="更新时间")
-    # created_at: NaiveDatetime = Field(default_factory=datetime.now, description="创建时间")
-    # updated_at: NaiveDatetime = Field(default_factory=datetime.now, description="更新时间")
     created_at: datetime = Field(
         default_factory=datetime.now, sa_type=_NAIVE_DATETIME, description="创建时间"
     )
@@ -51,9 +46,6 @@ class Match(SQLModel, table=True):
     # created_at: datetime = Field(default_factory=datetime.now)
     # started_at: Optional[datetime] = Field(default=None, description="开始时间")
     # ended_at: Optional[datetime] = Field(default=None, description="结束时间")
-    # created_at: NaiveDatetime = Field(default_factory=datetime.now)
-    # started_at: Optional[NaiveDatetime] = Field(default=None, description="开始时间")
-    # ended_at: Optional[NaiveDatetime] = Field(default=None, description="结束时间")
     created_at: datetime = Field(default_factory=datetime.now, sa_type=_NAIVE_DATETIME)
     started_at: Optional[datetime] = Field(
         default=None, sa_type=_NAIVE_DATETIME, description="开始时间"
@@ -77,7 +69,6 @@ class MatchParticipant(SQLModel, table=True):
     wrong_count: int = Field(default=0, description="答错数")
     score: float = Field(default=0.0, description="得分(正确数-错误数*1/3)")
     # joined_at: datetime = Field(default_factory=datetime.now)
-    # joined_at: NaiveDatetime = Field(default_factory=datetime.now)
     joined_at: datetime = Field(default_factory=datetime.now, sa_type=_NAIVE_DATETIME)
 
 
@@ -97,5 +88,4 @@ class MatchHonor(SQLModel, table=True):
     score: float = Field(default=0.0, description="得分(正确数-错误数*1/3)")
     medal: str = Field(description="奖牌")
     # created_at: datetime = Field(default_factory=datetime.now)
-    # created_at: NaiveDatetime = Field(default_factory=datetime.now)
     created_at: datetime = Field(default_factory=datetime.now, sa_type=_NAIVE_DATETIME)
